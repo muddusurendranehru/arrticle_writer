@@ -1,0 +1,128 @@
+### Heart Backend API Tests
+### Use REST Client extension in VS Code or similar HTTP client
+
+### Variables
+@baseUrl = http://localhost:5000
+@token = YOUR_JWT_TOKEN_HERE
+
+### 1. Health Check
+GET {{baseUrl}}/health
+
+### 2. Sign Up
+POST {{baseUrl}}/api/auth/signup
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "Test1234",
+  "confirmPassword": "Test1234"
+}
+
+### 3. Login
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "Test1234"
+}
+
+### 4. Get Current User (Protected)
+GET {{baseUrl}}/api/auth/me
+Authorization: Bearer {{token}}
+
+### 5. Create Article Draft (Protected)
+POST {{baseUrl}}/api/drafts
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "My First Article",
+  "originalContent": "This is the original research content that needs to be rewritten in a human-style academic format.",
+  "status": "draft"
+}
+
+### 6. Get All Drafts (Protected)
+GET {{baseUrl}}/api/drafts
+Authorization: Bearer {{token}}
+
+### 7. Get Single Draft by ID (Protected)
+GET {{baseUrl}}/api/drafts/DRAFT_ID_HERE
+Authorization: Bearer {{token}}
+
+### 8. Update Draft (Protected)
+PUT {{baseUrl}}/api/drafts/DRAFT_ID_HERE
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Updated Article Title",
+  "rewrittenContent": "This is the AI-rewritten content.",
+  "status": "published"
+}
+
+### 9. Delete Draft (Protected)
+DELETE {{baseUrl}}/api/drafts/DRAFT_ID_HERE
+Authorization: Bearer {{token}}
+
+### 10. AI Text Rewriting (Protected)
+POST {{baseUrl}}/api/tools/rewrite
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "text": "The study demonstrates significant correlation between variables.",
+  "style": "academic"
+}
+
+### 11. Generate Citations (Protected)
+POST {{baseUrl}}/api/tools/citations
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "references": [
+    {
+      "authors": "Smith J, Doe A",
+      "title": "Research on AI Writing",
+      "journal": "Journal of AI",
+      "year": "2024",
+      "volume": "10",
+      "issue": "2",
+      "pages": "123-145"
+    }
+  ]
+}
+
+### 12. Grammar Check (Protected)
+POST {{baseUrl}}/api/tools/grammar
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "text": "This are an example of text with grammar error.",
+  "language": "en-US"
+}
+
+### 13. AI Detection (Protected)
+POST {{baseUrl}}/api/tools/ai-detect
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "text": "This is a naturally written human text that should pass AI detection tests."
+}
+
+### 14. Research Suggestions (Protected)
+POST {{baseUrl}}/api/tools/research
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "query": "machine learning in healthcare"
+}
+
+### 15. Logout (Protected)
+POST {{baseUrl}}/api/auth/logout
+Authorization: Bearer {{token}}
+
