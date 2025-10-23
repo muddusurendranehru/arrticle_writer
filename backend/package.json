@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "nodemon src/server.ts",
     "build": "tsc",
-    "start": "ts-node src/server.ts",
-    "start:prod": "node dist/server.js",
+    "start": "node dist/server.js",
     "test": "echo \"Running backend tests...\" && exit 0"
   },
   "keywords": [
