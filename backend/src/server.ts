@@ -22,7 +22,11 @@ const app: Application = express();
 // Middleware
 app.use(helmet()); // Security headers
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:3001'], // Support both ports
+  origin: [
+    'http://localhost:3000', 
+    'http://localhost:3001',
+    'https://arrticle-writer-frontend.onrender.com' // Production frontend
+  ],
   credentials: true
 }));
 app.use(express.json({ limit: '10mb' })); // Parse JSON bodies
