@@ -34,7 +34,11 @@ export default function LoginPage() {
         const { user, token } = response.data.data;
         login(user, token);
         toast.success('Login successful!');
-        router.push('/dashboard');
+        
+        // Small delay to ensure state is updated before navigation
+        setTimeout(() => {
+          router.push('/dashboard');
+        }, 100);
       }
     } catch (error: any) {
       console.error('Login error:', error.response?.data);

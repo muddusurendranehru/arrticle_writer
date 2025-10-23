@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/useAuthStore';
 
@@ -11,18 +11,22 @@ interface ProtectedRouteProps {
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const router = useRouter();
   const { isAuthenticated, isLoading, initAuth } = useAuthStore();
+  const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
+    // Only initialize auth once on mount
     initAuth();
-  }, [initAuth]);
+    setIsChecking(false);
+  }, []); // Empty dependency array - only run once
 
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
+    // Only redirect if we're done checking and not authenticated
+    if (!isChecking && !isLoading && !isAuthenticated) {
       router.push('/login');
     }
-  }, [isAuthenticated, isLoading, router]);
+  }, [isAuthenticated, isLoading, isChecking, router]);
 
-  if (isLoading) {
+  if (isChecking || isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
