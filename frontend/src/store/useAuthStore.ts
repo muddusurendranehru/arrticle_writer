@@ -29,18 +29,28 @@ export const useAuthStore = create<AuthState>((set) => ({
   setToken: (token) => set({ token }),
 
   login: (user, token) => {
-    localStorage.setItem('token', token);
-    localStorage.setItem('user', JSON.stringify(user));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+    }
     set({ user, token, isAuthenticated: true });
   },
 
   logout: () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+    }
     set({ user: null, token: null, isAuthenticated: false });
   },
 
   initAuth: () => {
+    // Only run on client side
+    if (typeof window === 'undefined') {
+      set({ isLoading: false });
+      return;
+    }
+
     try {
       const token = localStorage.getItem('token');
       const userStr = localStorage.getItem('user');
