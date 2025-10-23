@@ -8,6 +8,9 @@ export interface AuthRequest extends Request {
     id: string;
     email: string;
   };
+  body: any;
+  params: any;
+  headers: any;
 }
 
 // Middleware to verify JWT token
